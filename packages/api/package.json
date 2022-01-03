@@ -1,0 +1,76 @@
+{
+  "name": "@switch-codes/api",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "./node_modules/.bin/ts-node build.ts",
+    "lint": "eslint . --ext .ts",
+    "start": "node -r module-alias/register ./dist --env=production",
+    "dev": "nodemon",
+    "test": "nodemon --config ./spec/nodemon.json",
+    "test:no-reloading": "./node_modules/.bin/ts-node -r tsconfig-paths/register ./spec"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "ext": "ts, html",
+    "ignore": [
+      "src/public"
+    ],
+    "exec": "./node_modules/.bin/ts-node -r tsconfig-paths/register ./src"
+  },
+  "_moduleAliases": {
+    "@daos": "dist/daos",
+    "@entities": "dist/entities",
+    "@shared": "dist/shared",
+    "@server": "dist/Server"
+  },
+  "eslintIgnore": [
+    "src/public/",
+    "build.ts"
+  ],
+  "dependencies": {
+    "command-line-args": "^5.2.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^4.6.0",
+    "http-status-codes": "^2.2.0",
+    "jet-logger": "^1.0.6",
+    "jsonfile": "^6.1.0",
+    "module-alias": "^2.2.2",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
+    "typeorm": "^0.2.41"
+  },
+  "devDependencies": {
+    "@switch-codes/common": "^0.0.0",
+    "@types/command-line-args": "^5.2.0",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/express": "^4.17.13",
+    "@types/find": "^0.2.1",
+    "@types/fs-extra": "^9.0.13",
+    "@types/jasmine": "^3.10.3",
+    "@types/jsonfile": "^6.0.1",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^17.0.6",
+    "@types/supertest": "^2.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "find": "^0.3.0",
+    "fs-extra": "^10.0.0",
+    "jasmine": "^4.0.0",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.1.6",
+    "ts-node": "^10.4.0",
+    "tsconfig-paths": "^3.12.0",
+    "typescript": "^4.5.4"
+  }
+}
