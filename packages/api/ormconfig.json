@@ -1,0 +1,25 @@
+{
+   "type": "mysql",
+   "host": "localhost",
+   "port": 3306,
+   "username": "root",
+   "password": "(penguin999)",
+   "database": "switch-codes",
+   "synchronize": true,
+   "logging": false,
+   "keepConnectionAlive": true,
+   "entities": [
+      "../common/src/entities/**/*.js"
+   ],
+   "migrations": [
+      "../common/src/migration/**/*.js"
+   ],
+   "subscribers": [
+      "../common/src/subscriber/**/*.ks"
+   ],
+   "cli": {
+      "entitiesDir": "../common/src/entities",
+      "migrationsDir": "../common/src/migration",
+      "subscribersDir": "../common/src/subscriber"
+   }
+}
