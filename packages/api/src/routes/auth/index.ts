@@ -28,10 +28,10 @@ router.post('/', async (req: Request, res: Response) => {
         }
         return res.status(StatusCodes.OK).json({ token: jwt.sign(userTokenObject, <string>process.env.JWT_PRIVATE_KEY) })
       } else {
-        return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Invalid login credentials' })
+        return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Invalid password' })
       }
     } else {
-      return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Invalid login credentials' })
+      return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'User does not exist' })
     }
   }).catch((error) => {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error)
