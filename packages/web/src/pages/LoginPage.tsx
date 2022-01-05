@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import SwitchLogo from '../assets/switch-logo.png'
 import { Button, TextBox } from '../components/Form'
 import userApi from '../api/user'
@@ -51,7 +51,7 @@ const LoginPage = () => {
   }
 
   return isAuthed
-    ? <h1>You are authed!</h1>
+    ? <Navigate to="/dashboard/home" />
     : (
       <div className="flex h-screen bg-gray-50">
         <div className="m-auto w-full sm:w-5/6 lg:w-2/4 xl:w-1/3">
