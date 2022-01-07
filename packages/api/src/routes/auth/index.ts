@@ -4,7 +4,6 @@ import { StatusCodes } from 'http-status-codes'
 import { createConnection } from 'typeorm'
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
-import { validateAuth } from '../../middleware/auth'
 
 const router = Router()
 
@@ -37,11 +36,6 @@ router.post('/', async (req: Request, res: Response) => {
   }).catch((error) => {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error)
   })
-})
-
-router.get('/test', validateAuth, async (req: Request, res: Response) => {
-  console.log('bodeehhh', req.body)
-  return res.status(StatusCodes.OK).send()
 })
 
 router.get('/logout', async (req: Request, res: Response) => {

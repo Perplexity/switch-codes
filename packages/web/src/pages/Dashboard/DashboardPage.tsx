@@ -3,7 +3,7 @@ import { NavBar } from '../../components/Dashboard'
 
 const DashboardPage = () => {
   return (
-    <div>
+    <div className='bg-gray-50'>
       <div className='flex flex-row gap-4'>
           <NavBar />
         <div>
