@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../app/store'
 import { User } from '@switch-codes/common/entities'
 
-interface UserState {
+export interface UserState {
   loading: boolean;
   user: User | undefined;
 }

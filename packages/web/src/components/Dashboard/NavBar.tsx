@@ -4,8 +4,7 @@ import classNames from 'classnames'
 import { useState } from 'react'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
-import { useAppSelector } from '../../app/hooks'
-import { selectUser } from '../../slices/userSlice'
+import { useUser } from '../../hooks/user'
 
 const navs = [
   {
@@ -21,11 +20,11 @@ const navs = [
 const NavBar = () => {
   const { page } = useParams()
   const [mobileOpen, setMobileOpen] = useState<boolean>(false)
-  const userState = useAppSelector(selectUser)
+  const user = useUser()
   return (
     <div className={classNames('flex lg:static  text-center', { absolute: mobileOpen })}>
       <div className={classNames('w-72 h-screen bg-gradient-to-b from-red-500 to-red-700 lg:block text-white', { hidden: !mobileOpen })}>
-        {userState.loading
+        {user.loading
           ? <p>Loading...</p>
           : (
           <>
@@ -35,7 +34,7 @@ const NavBar = () => {
               </div>
             </div>
             <div className='pt-4 text-xs'>
-              Signed in as {userState.user?.username}
+              Signed in as {user.user?.username}
             </div>
           </>
             )}
