@@ -1,12 +1,10 @@
 import axios from 'axios'
-import { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { Navigate, Outlet } from 'react-router'
 import { useIsAuthed } from '../hooks/isAuthed'
 
 const DashboardLayout = () => {
   const isAuthed = useIsAuthed()
-  const [isError, setError] = useState<boolean>(false)
   const [cookies] = useCookies(['auth_token'])
   const { auth_token } = cookies
 

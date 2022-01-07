@@ -5,11 +5,15 @@ import { Button, TextBox } from '../components/Form'
 import userApi from '../api/user'
 import { useCookies } from 'react-cookie'
 import { useIsAuthed } from '../hooks/isAuthed'
+import moment from 'moment'
+
+type InputChange = React.ChangeEvent<HTMLInputElement>
 
 const LoginPage = () => {
   const { doLogin } = userApi
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [remember, setRemember] = useState<boolean>(false)
 
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | undefined>(undefined)
@@ -18,12 +22,16 @@ const LoginPage = () => {
 
   const isAuthed = useIsAuthed()
 
-  const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onUsernameChange = (e: InputChange) => {
     setUsername(e.currentTarget.value)
   }
 
-  const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onPasswordChange = (e: InputChange) => {
     setPassword(e.currentTarget.value)
+  }
+
+  const onRememberChange = (e: InputChange) => {
+    setRemember(e.currentTarget.checked)
   }
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,7 +49,7 @@ const LoginPage = () => {
     doLogin(username, password).then((response) => {
       const { token } = response.data
       if (token) {
-        setCookie('auth_token', token, { path: '/' })
+        setCookie('auth_token', token, { path: '/', expires: remember ? undefined : moment().add(1, 'hour').toDate() })
       } else {
         setError('Something went wrong. Please try again.')
       }
@@ -68,6 +76,12 @@ const LoginPage = () => {
               </div>
               <div>
                 <TextBox id="password" type="password" placeholder="Password" required value={password} onChange={onPasswordChange} data-testid='password' />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <input type="checkbox" className="checkbox" id="rememberMe" checked={remember} onChange={onRememberChange} />
+                  <label htmlFor='rememberMe' className="label-text cursor-pointer">Remember me</label>
+                </div>
               </div>
               <Button colour='red' loading={loading} data-testid='submit'>{!loading && 'Sign in'}</Button>
               <Button colour='sky' type='button' outline><Link to='/register'>Register new account</Link></Button>
