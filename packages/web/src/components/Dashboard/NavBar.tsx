@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes, faBars, faUser, faHome, faCode, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faBars, faUser, faHome, faUserShield, faCode, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames'
 import { useState } from 'react'
 import { useParams } from 'react-router'
@@ -9,6 +9,7 @@ import { Button } from '../Form'
 import { useCookies } from 'react-cookie'
 import { reset as userReset } from '../../slices/userSlice'
 import { useAppDispatch } from '../../app/hooks'
+import { Spinner } from '.'
 
 const navs = [
   {
@@ -20,6 +21,11 @@ const navs = [
     page: 'codes',
     display: 'Codes',
     icon: faCode
+  },
+  {
+    page: 'admin',
+    display: 'Admin',
+    icon: faUserShield
   }
 ]
 
@@ -36,10 +42,14 @@ const NavBar = () => {
   }
 
   return (
-    <div className={classNames('flex lg:static  text-center', { absolute: mobileOpen })}>
+    <div className={classNames('flex z-50 lg:static  text-center', { absolute: mobileOpen })}>
       <div className={classNames('w-72 h-screen bg-gradient-to-b from-red-500 to-red-700 lg:block text-white', { hidden: !mobileOpen })}>
         {user.loading
-          ? <p>Loading...</p>
+          ? (
+            <div className='py-2'>
+              <Spinner />
+            </div>
+            )
           : (
             <>
               <div className="flex justify-center avatar placeholder pt-4">
@@ -74,7 +84,7 @@ const NavBar = () => {
           )}
         </div>
       </div>
-      <div className='block lg:hidden'>
+      <div className='block py-2 lg:hidden'>
         <FontAwesomeIcon className='text-3xl mx-2' icon={mobileOpen ? faTimes : faBars} onClick={() => setMobileOpen(!mobileOpen)} />
       </div>
     </div>
