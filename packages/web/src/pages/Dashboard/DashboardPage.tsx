@@ -1,25 +1,57 @@
 import { Navigate, useParams } from 'react-router'
-import { NavBar } from '../../components/Dashboard'
+import { NavBar, Spinner } from '../../components/Dashboard'
+import { useNews } from '../../hooks/news'
+import { useUser } from '../../hooks/user'
 import Home from './pages/Home'
+
+type Page = {
+  component: any,
+  dependentState?: any
+}
 interface PageMap {
-  [index: string]: any
+  [index: string]: Page
 }
 const pageMap: PageMap = {
-  home: Home
+  home: {
+    component: Home,
+    dependentState: useNews
+  }
 }
 
 const DashboardPage = () => {
   const params = useParams()
   const selectedPage = params.page ?? 'home'
-  const Page = pageMap[selectedPage]
-  if (!Page) {
+  const construct = pageMap[selectedPage]
+  if (!construct) {
     return <Navigate to='/dashboard/home' />
+  }
+  const user = useUser()
+  const Page = construct.component
+  const pageState = construct.dependentState ? construct.dependentState() : { loading: false }
+  if (user.loading) {
+    return (
+      <div className="flex h-screen bg-gray-200">
+        <div className="m-auto w-full">
+          <div className='text-center'>
+            <Spinner />
+          </div>
+        </div>
+      </div>
+    )
   }
   return (
     <div className='bg-gray-50'>
       <div className='flex flex-row gap-4'>
         <NavBar />
-        <Page />
+        {
+          pageState.loading
+            ? (
+              <div className='flex justify-center items-center w-full h-screen'>
+                <Spinner />
+              </div>
+              )
+            : <Page />
+        }
       </div>
     </div>
   )

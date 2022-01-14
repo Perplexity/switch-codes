@@ -61,7 +61,7 @@ const LoginPage = () => {
   return isAuthed
     ? <Navigate to="/dashboard/home" />
     : (
-      <div className="flex h-screen bg-gray-50">
+      <div className="flex h-screen">
         <div className="m-auto w-full sm:w-5/6 lg:w-2/4 xl:w-1/3">
           <div className="flex justify-center"><img src={SwitchLogo} className="w-32 h-32" alt="switch-logo" /></div>
           <form onSubmit={onSubmit} data-testid='form'>
