@@ -14,7 +14,7 @@ interface PageMap {
 const pageMap: PageMap = {
   home: {
     component: Home,
-    dependentState: useNews
+    dependentState: () => useNews()
   }
 }
 
