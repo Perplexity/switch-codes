@@ -5,6 +5,9 @@ import { store } from '../../../app/store'
 import * as news from '../../../hooks/news'
 import moment from 'moment'
 
+const useNewsFixture = require('../../../spec/fixtures/useNews.json')
+useNewsFixture.news[0].timestamp = moment().subtract(5, 'minutes').toDate()
+
 let useNews: jest.SpyInstance
 
 describe('Home page', () => {
@@ -18,9 +21,7 @@ describe('Home page', () => {
   })
 
   it('shows news articles', () => {
-    useNews = jest.spyOn(news, 'useNews').mockImplementation(() => {
-      return { loading: false, news: [{ id: 1, title: 'Welcome', content: 'Hello and welcome to the website, this is just a test.', timestamp: moment().subtract(5, 'minutes').toDate() }] }
-    })
+    useNews = jest.spyOn(news, 'useNews').mockImplementation(() => useNewsFixture)
     render(
       <Provider store={store}>
         <Home />

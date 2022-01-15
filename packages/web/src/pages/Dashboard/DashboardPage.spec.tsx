@@ -11,17 +11,15 @@ let useUser: jest.SpyInstance
 
 jest.mock('../../hooks/news', () => ({
   useNews: () => {
+    const useNewsFixture = require('../../spec/fixtures/useNews.json')
     const moment = require('moment')
-    return {
-      loading: false,
-      news: [{ id: 1, title: 'Welcome', content: 'Hello and welcome to the website, this is just a test.', timestamp: moment().subtract(5, 'minutes').toDate() }]
-    }
+    useNewsFixture.news[0].timestamp = moment().subtract(5, 'minutes').toDate()
+    return useNewsFixture
   }
 }))
 
-describe('Dashboard page', () => {
+describe('Dashboaard page', () => {
   beforeEach(() => {
-    useParams = jest.spyOn(router, 'useParams').mockImplementation(() => ({ page: 'home' }))
     useUser = jest.spyOn(user, 'useUser').mockImplementation(() => (
       {
         loading: false,
@@ -35,6 +33,7 @@ describe('Dashboard page', () => {
     ))
   })
   it('renders home page', () => {
+    useParams = jest.spyOn(router, 'useParams').mockImplementation(() => ({ page: 'home' }))
     render(
       <BrowserRouter>
         <Provider store={store}>
