@@ -1,4 +1,4 @@
-import { getByText, render } from '@testing-library/react'
+import { getByRole, getByText, render } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store } from '../../app/store'
 import * as router from 'react-router'
@@ -42,12 +42,24 @@ describe('Dashboard page', () => {
       )
       expect(useParams).toBeCalled()
       expect(useUser).toBeCalled()
+      expect(useNews).toBeCalled()
       expect(getByText(document.body, /5 minutes ago/i)).toBeInTheDocument()
       expect(getByText(document.body, /Hello and welcome to the website, this is just a test./i)).toBeInTheDocument()
     })
 
     it('should show spinner when loading', () => {
-
+      useNews = jest.spyOn(news, 'useNews').mockImplementation(() => getUseNewsData(true))
+      render(
+        <BrowserRouter>
+          <Provider store={store}>
+            <DashboardPage />
+          </Provider>
+        </BrowserRouter>
+      )
+      expect(useParams).toBeCalled()
+      expect(useUser).toBeCalled()
+      expect(useNews).toBeCalled()
+      expect(document.querySelector('div.spinner')).toBeInTheDocument()
     })
   })
 })
