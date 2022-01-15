@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getNews } from '../api/news'
+import { getNews } from '../api'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { NewsState, selectNews, setLoading, setNews } from '../slices/newsSlice'
 

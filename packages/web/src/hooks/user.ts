@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { selectUser, setLoading, setUser, UserState } from '../slices/userSlice'
 import { UnauthorizedUser } from '../errors'
 import { useCookies } from 'react-cookie'
-import { getMyUser } from '../api/user'
+import { getMyUser } from '../api'
 
 export const useUser = (): UserState => {
   const [, , removeCookie] = useCookies(['auth_token'])

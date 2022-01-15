@@ -12,7 +12,7 @@ const loginResponse = {
   statusText: 'OK'
 }
 
-let doLogin
+let doLogin: jest.SpyInstance
 
 describe('Sign in form', () => {
   beforeEach(() => {
@@ -31,7 +31,7 @@ describe('Sign in form', () => {
   it('Does not submit when no data filled in', async () => {
     fireEvent.click(getByTestId(document.body, 'submit'))
     expect(getByText(document.body, /Please fill in login details/i)).toBeInTheDocument()
-    expect(userApi.doLogin).not.toHaveBeenCalled()
+    expect(doLogin).not.toHaveBeenCalled()
   })
 
   it('Submits when data filled in', async () => {
@@ -41,7 +41,7 @@ describe('Sign in form', () => {
       fireEvent.click(getByTestId(document.body, 'submit'))
     })
     waitForElement(() => {
-      expect(userApi.doLogin).toHaveBeenCalledTimes(1)
+      expect(doLogin).toHaveBeenCalledTimes(1)
     })
   })
 })

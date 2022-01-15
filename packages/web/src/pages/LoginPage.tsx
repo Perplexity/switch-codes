@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import SwitchLogo from '../assets/switch-logo.png'
 import { Button, TextBox } from '../components/Form'
-import { doLogin } from '../api/user'
 import { useCookies } from 'react-cookie'
 import { useIsAuthed } from '../hooks/isAuthed'
 import moment from 'moment'
+import { doLogin } from '../api'
 
 type InputChange = React.ChangeEvent<HTMLInputElement>
 
