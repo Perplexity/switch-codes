@@ -1,16 +1,22 @@
 import { fireEvent, getByTestId, getByText, render, waitForElement } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import LoginPage from './LoginPage'
-import userApi from '../api/user'
 import { act } from 'react-dom/test-utils'
+import * as userApi from '../api/user'
 
 const loginResponse = {
-  data: { message: 'This is just a test.' }
+  config: {},
+  headers: {},
+  data: { message: 'This is just a test.' },
+  status: 200,
+  statusText: 'OK'
 }
+
+let doLogin
 
 describe('Sign in form', () => {
   beforeEach(() => {
-    userApi.doLogin = jest.fn().mockResolvedValue(loginResponse)
+    doLogin = jest.spyOn(userApi, 'doLogin').mockResolvedValue(loginResponse)
     render(
       <BrowserRouter>
         <LoginPage />

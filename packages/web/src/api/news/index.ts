@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-const getNews = () => {
+export const getNews = () => {
   return axios.get('/news')
 }
-
-export default { getNews }
