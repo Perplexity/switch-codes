@@ -1,4 +1,4 @@
-import { getByRole, getByText, render } from '@testing-library/react'
+import { getByText, render } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { store } from '../../app/store'
 import * as router from 'react-router'
