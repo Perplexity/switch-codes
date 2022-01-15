@@ -21,13 +21,13 @@ const pageMap: PageMap = {
 const DashboardPage = () => {
   const params = useParams()
   const selectedPage = params.page ?? 'home'
-  const construct = pageMap[selectedPage]
-  if (!construct) {
+  const page = pageMap[selectedPage]
+  if (!page) {
     return <Navigate to='/dashboard/home' />
   }
   const user = useUser()
-  const Page = construct.component
-  const pageState = construct.dependentState ? construct.dependentState() : { loading: false }
+  const Page = page.component
+  const pageState = page.dependentState ? page.dependentState() : { loading: false }
   if (user.loading) {
     return (
       <div className="flex h-screen bg-gray-200">
