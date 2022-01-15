@@ -1,4 +1,5 @@
 import moment from 'moment'
+import ReactMarkdown from 'react-markdown'
 import { useNews } from '../../../hooks/news'
 
 const Home = () => {
@@ -14,7 +15,7 @@ const Home = () => {
                 <span className='text-sm text-gray-400'>{moment(article.timestamp).fromNow()}</span>
               </div>
               <h2 className="text-xl font-medium">{article.title}</h2>
-              <p>{article.content}</p>
+              <ReactMarkdown>{article.content}</ReactMarkdown>
             </div>
           )
         }
