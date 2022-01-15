@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
+import { getNews } from '../api/news'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
-import newsApi from '../api/news'
 import { NewsState, selectNews, setLoading, setNews } from '../slices/newsSlice'
 
 export const useNews = (): NewsState => {
@@ -12,7 +12,7 @@ export const useNews = (): NewsState => {
     (async () => {
       if (newsState.loading) {
         try {
-          const response = await newsApi.getNews()
+          const response = await getNews()
           dispatch(setNews(response.data))
           dispatch(setLoading(false))
         } catch (err: any) {

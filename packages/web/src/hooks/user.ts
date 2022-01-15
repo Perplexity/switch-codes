@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import { selectUser, setLoading, setUser, UserState } from '../slices/userSlice'
-import userApi from '../api/user'
 import { UnauthorizedUser } from '../errors'
 import { useCookies } from 'react-cookie'
+import { getMyUser } from '../api/user'
 
 export const useUser = (): UserState => {
   const [, , removeCookie] = useCookies(['auth_token'])
@@ -15,7 +15,7 @@ export const useUser = (): UserState => {
     (async () => {
       if (userState.loading) {
         try {
-          const user = await userApi.getMyUser()
+          const user = await getMyUser()
           dispatch(setUser(user))
           dispatch(setLoading(false))
         } catch (err: any) {

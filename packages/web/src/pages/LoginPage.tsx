@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import SwitchLogo from '../assets/switch-logo.png'
 import { Button, TextBox } from '../components/Form'
-import userApi from '../api/user'
+import { doLogin } from '../api/user'
 import { useCookies } from 'react-cookie'
 import { useIsAuthed } from '../hooks/isAuthed'
 import moment from 'moment'
@@ -10,7 +10,6 @@ import moment from 'moment'
 type InputChange = React.ChangeEvent<HTMLInputElement>
 
 const LoginPage = () => {
-  const { doLogin } = userApi
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [remember, setRemember] = useState<boolean>(false)
