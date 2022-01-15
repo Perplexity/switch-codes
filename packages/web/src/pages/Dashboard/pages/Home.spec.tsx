@@ -3,10 +3,7 @@ import { Provider } from 'react-redux'
 import Home from './Home'
 import { store } from '../../../app/store'
 import * as news from '../../../hooks/news'
-import moment from 'moment'
-
-const useNewsFixture = require('../../../spec/fixtures/useNews.json')
-useNewsFixture.news[0].timestamp = moment().subtract(5, 'minutes').toDate()
+import { getUseNewsData } from '../../../spec/fixtures'
 
 let useNews: jest.SpyInstance
 
@@ -21,7 +18,7 @@ describe('Home page', () => {
   })
 
   it('shows news articles', () => {
-    useNews = jest.spyOn(news, 'useNews').mockImplementation(() => useNewsFixture)
+    useNews = jest.spyOn(news, 'useNews').mockImplementation(() => getUseNewsData())
     render(
       <Provider store={store}>
         <Home />

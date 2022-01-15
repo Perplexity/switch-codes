@@ -11,14 +11,12 @@ let useUser: jest.SpyInstance
 
 jest.mock('../../hooks/news', () => ({
   useNews: () => {
-    const useNewsFixture = require('../../spec/fixtures/useNews.json')
-    const moment = require('moment')
-    useNewsFixture.news[0].timestamp = moment().subtract(5, 'minutes').toDate()
-    return useNewsFixture
+    const fixtures = require('../../spec/fixtures')
+    return fixtures.getUseNewsData()
   }
 }))
 
-describe('Dashboaard page', () => {
+describe('Dashboard page', () => {
   beforeEach(() => {
     useUser = jest.spyOn(user, 'useUser').mockImplementation(() => (
       {
