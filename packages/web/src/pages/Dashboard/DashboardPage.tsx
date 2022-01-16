@@ -1,5 +1,7 @@
+import { faCode, faHome, faUserShield } from '@fortawesome/free-solid-svg-icons'
 import { Navigate, useParams } from 'react-router'
 import { NavBar, Spinner } from '../../components/Dashboard'
+import { NavItem } from '../../components/Dashboard/NavBar'
 import { useNews } from '../../hooks/news'
 import { useUser } from '../../hooks/user'
 import Home from './pages/Home'
@@ -17,6 +19,24 @@ const pageMap: PageMap = {
     dependentState: () => useNews()
   }
 }
+
+const navItems: NavItem[] = [
+  {
+    page: 'home',
+    display: 'Home',
+    icon: faHome
+  },
+  {
+    page: 'codes',
+    display: 'Codes',
+    icon: faCode
+  },
+  {
+    page: 'admin',
+    display: 'Admin',
+    icon: faUserShield
+  }
+]
 
 const DashboardPage = () => {
   const params = useParams()
@@ -42,7 +62,7 @@ const DashboardPage = () => {
   return (
     <div className='bg-gray-50'>
       <div className='flex flex-row gap-4'>
-        <NavBar />
+        <NavBar navItems={navItems} />
         {
           pageState.loading
             ? (

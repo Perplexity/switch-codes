@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { NewsState } from '../../slices/newsSlice'
+import { NewsState } from '../../../slices/newsSlice'
 
 export const getUseNewsData = (loading: boolean = false): NewsState => {
   return {
