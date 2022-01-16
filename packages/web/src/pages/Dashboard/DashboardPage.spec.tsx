@@ -6,7 +6,7 @@ import * as user from '../../hooks/user'
 import * as news from '../../hooks/news'
 import DashboardPage from './DashboardPage'
 import { BrowserRouter } from 'react-router-dom'
-import { getUseNewsData } from '../../spec/fixtures'
+import { getLoggedInUserData, getUseNewsData } from '../../spec/fixtures'
 
 let useParams: jest.SpyInstance
 let useUser: jest.SpyInstance
@@ -24,17 +24,7 @@ const renderDashboard = () => {
 
 describe('Dashboard page', () => {
   beforeEach(() => {
-    useUser = jest.spyOn(user, 'useUser').mockImplementation(() => (
-      {
-        loading: false,
-        user: {
-          id: 0,
-          username: 'TestUser',
-          password: 'TestPassword',
-          email: 'Test@Test.com'
-        }
-      }
-    ))
+    useUser = jest.spyOn(user, 'useUser').mockImplementation(() => getLoggedInUserData())
   })
 
   describe('Home page', () => {

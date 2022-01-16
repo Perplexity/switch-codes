@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes, faBars, faUser, faHome, faUserShield, faCode, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faTimes, faBars, faUser, faHome, faUserShield, faCode, faSignOutAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import classNames from 'classnames'
 import { useState } from 'react'
 import { useParams } from 'react-router'
@@ -11,25 +11,17 @@ import { reset as userReset } from '../../slices/userSlice'
 import { useAppDispatch } from '../../app/hooks'
 import { Spinner } from '.'
 
-const navs = [
-  {
-    page: 'home',
-    display: 'Home',
-    icon: faHome
-  },
-  {
-    page: 'codes',
-    display: 'Codes',
-    icon: faCode
-  },
-  {
-    page: 'admin',
-    display: 'Admin',
-    icon: faUserShield
-  }
-]
+export interface NavItem {
+  page: string;
+  display: string;
+  icon: IconDefinition
+}
 
-const NavBar = () => {
+type Props = {
+  navItems: NavItem[]
+}
+
+const NavBar = ({ navItems }: Props) => {
   const { page } = useParams()
   const dispatch = useAppDispatch()
   const [, , removeCookie] = useCookies(['auth_token'])
@@ -64,7 +56,7 @@ const NavBar = () => {
             )}
         <Button icon={faSignOutAlt} colour='sky' type='button' onClick={doLogout}>Sign out</Button>
         <div className='flex flex-col gap-4 pt-4'>
-          {navs.map((nav, i) => {
+          {navItems.map((nav, i) => {
             const active = nav.page === page
             return (
               <div key={`nav-${i}`} className='pl-2'>
