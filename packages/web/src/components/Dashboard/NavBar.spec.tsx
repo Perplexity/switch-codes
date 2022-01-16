@@ -18,7 +18,7 @@ describe('NavBar', () => {
     useParams = jest.spyOn(router, 'useParams').mockImplementation(() => ({ page: 'home' }))
     useUser = jest.spyOn(user, 'useUser').mockImplementation(() => loggedInUser)
   })
-  it('renders', () => {
+  it('renders user data and navigation items', () => {
     render(
       <BrowserRouter>
         <Provider store={store}>
