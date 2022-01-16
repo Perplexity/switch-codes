@@ -12,6 +12,16 @@ let useParams: jest.SpyInstance
 let useUser: jest.SpyInstance
 let useNews: jest.SpyInstance
 
+const renderDashboard = () => {
+  render(
+    <BrowserRouter>
+      <Provider store={store}>
+        <DashboardPage />
+      </Provider>
+    </BrowserRouter>
+  )
+}
+
 describe('Dashboard page', () => {
   beforeEach(() => {
     useUser = jest.spyOn(user, 'useUser').mockImplementation(() => (
@@ -33,29 +43,18 @@ describe('Dashboard page', () => {
     })
     it('renders home page', () => {
       useNews = jest.spyOn(news, 'useNews').mockImplementation(() => getUseNewsData())
-      render(
-        <BrowserRouter>
-          <Provider store={store}>
-            <DashboardPage />
-          </Provider>
-        </BrowserRouter>
-      )
+      renderDashboard()
       expect(useParams).toBeCalled()
       expect(useUser).toBeCalled()
       expect(useNews).toBeCalled()
       expect(getByText(document.body, /5 minutes ago/i)).toBeInTheDocument()
       expect(getByText(document.body, /Hello and welcome to the website, this is just a test./i)).toBeInTheDocument()
+      expect(document.querySelector('div.spinner')).not.toBeInTheDocument()
     })
 
     it('should show spinner when loading', () => {
       useNews = jest.spyOn(news, 'useNews').mockImplementation(() => getUseNewsData(true))
-      render(
-        <BrowserRouter>
-          <Provider store={store}>
-            <DashboardPage />
-          </Provider>
-        </BrowserRouter>
-      )
+      renderDashboard()
       expect(useParams).toBeCalled()
       expect(useUser).toBeCalled()
       expect(useNews).toBeCalled()
