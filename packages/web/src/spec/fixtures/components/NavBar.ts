@@ -1,4 +1,4 @@
-import { faHome } from '@fortawesome/free-solid-svg-icons'
+import { faCode, faHome } from '@fortawesome/free-solid-svg-icons'
 import { NavItem } from '../../../components/Dashboard/NavBar'
 
 export const getNavBarItems = (): NavItem[] => {
@@ -7,6 +7,11 @@ export const getNavBarItems = (): NavItem[] => {
       page: 'home',
       display: 'Home',
       icon: faHome
+    },
+    {
+      page: 'codes',
+      display: 'Codes',
+      icon: faCode
     }
   ]
 }

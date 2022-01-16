@@ -32,4 +32,17 @@ describe('NavBar', () => {
       expect(document.querySelector(`svg[data-icon='${item.icon.iconName}']`)).toBeInTheDocument()
     })
   })
+  it('highlights active page', () => {
+    navItems.forEach((item) => {
+      useParams = jest.spyOn(router, 'useParams').mockImplementation(() => ({ page: item.page }))
+      render(
+        <BrowserRouter>
+          <Provider store={store}>
+            <NavBar navItems={navItems} />
+          </Provider>
+        </BrowserRouter>
+      )
+      expect(document.querySelector(`a[href='/dashboard/${item.page}'] div.bg-sky-600`)).toBeInTheDocument()
+    })
+  })
 })
