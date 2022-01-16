@@ -27,6 +27,12 @@ describe('Dashboard page', () => {
     useUser = jest.spyOn(user, 'useUser').mockImplementation(() => getLoggedInUserData())
   })
 
+  afterEach(() => {
+    expect(useParams).toBeCalled()
+    expect(useUser).toBeCalled()
+    expect(useNews).toBeCalled()
+  })
+
   describe('Home page', () => {
     beforeEach(() => {
       useParams = jest.spyOn(router, 'useParams').mockImplementation(() => ({ page: 'home' }))
@@ -34,9 +40,6 @@ describe('Dashboard page', () => {
     it('renders home page', () => {
       useNews = jest.spyOn(news, 'useNews').mockImplementation(() => getUseNewsData())
       renderDashboard()
-      expect(useParams).toBeCalled()
-      expect(useUser).toBeCalled()
-      expect(useNews).toBeCalled()
       expect(getByText(document.body, /5 minutes ago/i)).toBeInTheDocument()
       expect(getByText(document.body, /Hello and welcome to the website, this is just a test./i)).toBeInTheDocument()
       expect(document.querySelector('div.spinner')).not.toBeInTheDocument()
@@ -45,9 +48,6 @@ describe('Dashboard page', () => {
     it('should show spinner when loading', () => {
       useNews = jest.spyOn(news, 'useNews').mockImplementation(() => getUseNewsData(true))
       renderDashboard()
-      expect(useParams).toBeCalled()
-      expect(useUser).toBeCalled()
-      expect(useNews).toBeCalled()
       expect(document.querySelector('div.spinner')).toBeInTheDocument()
     })
   })
