@@ -15,10 +15,16 @@ const loggedInUser = getLoggedInUserData()
 
 describe('NavBar', () => {
   beforeEach(() => {
-    useParams = jest.spyOn(router, 'useParams').mockImplementation(() => ({ page: 'home' }))
     useUser = jest.spyOn(user, 'useUser').mockImplementation(() => loggedInUser)
   })
+
+  afterEach(() => {
+    expect(useParams).toBeCalled()
+    expect(useUser).toBeCalled()
+  })
+
   it('renders user data and navigation items', () => {
+    useParams = jest.spyOn(router, 'useParams').mockImplementation(() => ({ page: 'home' }))
     render(
       <BrowserRouter>
         <Provider store={store}>
@@ -32,6 +38,7 @@ describe('NavBar', () => {
       expect(document.querySelector(`svg[data-icon='${item.icon.iconName}']`)).toBeInTheDocument()
     })
   })
+
   it('highlights active page', () => {
     navItems.forEach((item) => {
       useParams = jest.spyOn(router, 'useParams').mockImplementation(() => ({ page: item.page }))
@@ -42,7 +49,7 @@ describe('NavBar', () => {
           </Provider>
         </BrowserRouter>
       )
-      expect(document.querySelector(`a[href='/dashboard/${item.page}'] div.bg-sky-600`)).toBeInTheDocument()
+      expect(document.querySelector(`a[href='/dashboard/${item.page}'] > div.bg-sky-600`)).toBeInTheDocument()
     })
   })
 })
