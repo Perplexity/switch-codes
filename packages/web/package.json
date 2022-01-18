@@ -34,7 +34,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "SET CI=true react-scripts test",
+    "test": "react-scripts test --no-watchman --all",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
