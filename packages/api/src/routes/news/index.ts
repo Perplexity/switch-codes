@@ -2,7 +2,7 @@ import { News } from '@switch-codes/common/entities'
 import { Request, Response, Router } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { getConnectionManager } from 'typeorm'
-import { validateAuth } from 'src/middleware/auth'
+import { validateAuth } from '../../middleware/auth'
 
 const router = Router()
 
