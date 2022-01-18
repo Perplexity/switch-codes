@@ -1,4 +1,4 @@
-import { fireEvent, getByTestId, getByText, render, waitForElement } from '@testing-library/react'
+import { fireEvent, getByTestId, getByText, render, waitForDomChange, waitForElement } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import LoginPage from './LoginPage'
 import { act } from 'react-dom/test-utils'
@@ -39,7 +39,7 @@ describe('Sign in form', () => {
     fireEvent.change(getByTestId(document.body, 'password'), { target: { value: 'testPassword' } })
     act(() => {
       fireEvent.click(getByTestId(document.body, 'submit'))
+      expect(doLogin).toHaveBeenCalledTimes(1)
     })
-    expect(doLogin).toHaveBeenCalledTimes(1)
   })
 })
