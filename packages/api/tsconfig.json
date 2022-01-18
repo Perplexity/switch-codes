@@ -71,18 +71,6 @@
     "paths": {
       "@switch-codes/common": ["../common"],
       "@switch-codes/common/entities": ["../common/entities"],
-      "@daos/*": [
-        "src/daos/*"
-      ],
-      "@entities/*": [
-        "src/entities/*"
-      ],
-      "@shared/*": [
-        "src/shared/*"
-      ],
-      "@server": [
-        "src/Server"
-      ]
     },
   },
   "include": [

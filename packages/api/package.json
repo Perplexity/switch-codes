@@ -2,9 +2,9 @@
   "name": "@switch-codes/api",
   "version": "0.0.0",
   "scripts": {
-    "build": "./node_modules/.bin/ts-node build.ts",
+    "build": "ts-node build.ts",
     "lint": "eslint . --ext .ts",
-    "start": "node -r module-alias/register ./dist --env=production",
+    "start": "node -r module-alias/register ./dist/api/src --env=prod",
     "dev": "nodemon",
     "test": "nodemon --config ./spec/nodemon.json",
     "test:no-reloading": "./node_modules/.bin/ts-node -r tsconfig-paths/register ./spec"
@@ -18,12 +18,6 @@
       "src/public"
     ],
     "exec": "./node_modules/.bin/ts-node -r tsconfig-paths/register ./src"
-  },
-  "_moduleAliases": {
-    "@daos": "dist/daos",
-    "@entities": "dist/entities",
-    "@shared": "dist/shared",
-    "@server": "dist/Server"
   },
   "eslintIgnore": [
     "src/public/",

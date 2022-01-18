@@ -15,7 +15,7 @@
       "../common/src/migration/**/*.js"
    ],
    "subscribers": [
-      "../common/src/subscriber/**/*.ks"
+      "../common/src/subscriber/**/*.js"
    ],
    "cli": {
       "entitiesDir": "../common/src/entities",

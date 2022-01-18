@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express'
 import { StatusCodes } from 'http-status-codes'
-import { validateAuth } from 'src/middleware/auth'
+import { validateAuth } from '../../middleware/auth'
 
 const router = Router()
 
