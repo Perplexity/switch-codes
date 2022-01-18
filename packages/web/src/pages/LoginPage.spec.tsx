@@ -40,8 +40,6 @@ describe('Sign in form', () => {
     act(() => {
       fireEvent.click(getByTestId(document.body, 'submit'))
     })
-    waitForElement(() => {
-      expect(doLogin).toHaveBeenCalledTimes(1)
-    })
+    expect(doLogin).toHaveBeenCalledTimes(1)
   })
 })
