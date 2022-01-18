@@ -13,8 +13,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "build": "tsc"
   },
   "devDependencies": {
     "typeorm": "^0.2.41",
