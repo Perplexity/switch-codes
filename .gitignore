@@ -4,5 +4,4 @@ build/
 development.env
 prod.env
 test.env
-package-lock.json
 packages/common/**/*.js
