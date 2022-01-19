@@ -1,7 +1,6 @@
-import { fireEvent, getByTestId, getByText, render, waitForDomChange, waitForElement } from '@testing-library/react'
+import { cleanup, fireEvent, getByTestId, getByText, render, wait } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import LoginPage from './LoginPage'
-import { act } from 'react-dom/test-utils'
 import * as userApi from '../api/user'
 
 const loginResponse = {
@@ -19,7 +18,7 @@ describe('Sign in form', () => {
     doLogin = jest.spyOn(userApi, 'doLogin').mockResolvedValue(loginResponse)
     render(
       <BrowserRouter>
-        <LoginPage />
+        <LoginPage captcha={false} />
       </BrowserRouter>
     )
   })
@@ -37,9 +36,8 @@ describe('Sign in form', () => {
   it('Submits when data filled in', async () => {
     fireEvent.change(getByTestId(document.body, 'username'), { target: { value: 'testUser' } })
     fireEvent.change(getByTestId(document.body, 'password'), { target: { value: 'testPassword' } })
-    act(() => {
-      fireEvent.click(getByTestId(document.body, 'submit'))
-      expect(doLogin).toHaveBeenCalledTimes(1)
-    })
+    fireEvent.click(getByTestId(document.body, 'submit'))
+    await wait(() => expect(doLogin).toHaveBeenCalledTimes(1), { timeout: 1 })
+    expect(getByText(document.body, /Something went wrong. Please try again./i)).toBeInTheDocument()
   })
 })
