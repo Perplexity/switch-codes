@@ -10,7 +10,11 @@ import ReCAPTCHA from 'react-google-recaptcha'
 
 type InputChange = React.ChangeEvent<HTMLInputElement>
 
-const LoginPage = () => {
+type Props = {
+  captcha?: boolean
+}
+
+const LoginPage = ({ captcha = true }: Props) => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [remember, setRemember] = useState<boolean>(false)
@@ -48,13 +52,15 @@ const LoginPage = () => {
     setError(undefined)
     setLoading(true)
     let recaptchaToken = null
-    if (recaptchaRef.current) {
-      recaptchaToken = await recaptchaRef.current.executeAsync()
-      if (!recaptchaToken) {
+    if (captcha) {
+      if (recaptchaRef.current) {
+        recaptchaToken = await recaptchaRef.current.executeAsync()
+        if (!recaptchaToken) {
+          setError('There was an error with the CAPTCHA. Please try again.')
+        }
+      } else {
         setError('There was an error with the CAPTCHA. Please try again.')
       }
-    } else {
-      setError('There was an error with the CAPTCHA. Please try again.')
     }
     doLogin(username, password, recaptchaToken ?? '').then((response) => {
       const { token } = response.data
@@ -101,7 +107,7 @@ const LoginPage = () => {
               <Button colour='red' loading={loading} data-testid='submit'>{!loading && 'Sign in'}</Button>
               <Button colour='sky' type='button' outline><Link to='/register'>Register new account</Link></Button>
             </div>
-            <ReCAPTCHA ref={recaptchaRef} size='invisible' sitekey={process.env.REACT_APP_SITE_KEY ?? ''} />
+            {captcha && <ReCAPTCHA ref={recaptchaRef} size='invisible' sitekey={process.env.REACT_APP_SITE_KEY ?? ''} />}
             {error && (<div className="alert alert-error">
               <div className='mx-auto'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-6 h-6 mx-2 stroke-current">
