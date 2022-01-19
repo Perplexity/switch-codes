@@ -32,6 +32,7 @@ if (process.env.NODE_ENV === 'prod') {
       directives: {
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'", "'unsafe-inline'", '*.google.com', '*.gstatic.com'],
+        frameSrc: ['*.google.com'],
         styleSrc: ["'self'", 'https:', "'unsafe-inline'"],
         imgSrc: ["'self'", 'data:'],
         fontSrc: ["'self'", 'https:', 'data:']
