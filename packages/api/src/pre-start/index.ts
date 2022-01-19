@@ -18,7 +18,7 @@ import commandLineArgs from 'command-line-args';
     }
   ])
   // Set the env file
-  if (options.env === 'dev') {
+  if (options.env === 'development') {
     const result2 = dotenv.config({
       path: path.join(__dirname, `env/${options.env}.env`)
     })

@@ -1,15 +1,30 @@
 import { User } from '@switch-codes/common/entities'
+import { LoginRequest } from '@switch-codes/common/types'
 import { Request, Response, Router } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { getConnectionManager } from 'typeorm'
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
+import axios from 'axios'
 
 const router = Router()
 
 router.post('/', async (req: Request, res: Response) => {
-  if (!req.body.username || !req.body.password) {
+  const body: LoginRequest = req.body
+  if (!body.username || !body.password || !body.recaptchaToken) {
     return res.status(StatusCodes.BAD_REQUEST).send({ error: 'Invalid request' })
+  }
+  try {
+    const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.GOOGLE_SECRET_KEY}&response=${body.recaptchaToken}`, {}, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+    if (!response.data.success) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'ReCAPTCHA validation unsuccessful' })
+    }
+  } catch {
+    return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'ReCAPTCHA validation failed' })
   }
   const { username, password } = req.body
   console.log('hashed', await bcrypt.hash(password, 10))

@@ -1,11 +1,21 @@
 import { User } from '@switch-codes/common/entities'
+import { LoginRequest } from '@switch-codes/common/types'
 import axios from 'axios'
 import { UnauthorizedUser } from '../../errors'
 
-export const doLogin = (username: string, password: string) => {
+export const doLogin = (username: string, password: string, recaptchaToken: string) => {
+  return doLoginRequest({
+    username,
+    password,
+    recaptchaToken
+  })
+}
+
+const doLoginRequest = ({ username, password, recaptchaToken }: LoginRequest) => {
   return axios.post('/auth', {
     username,
-    password
+    password,
+    recaptchaToken
   })
 }
 
