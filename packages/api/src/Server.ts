@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === 'prod') {
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", '*.google.com', "'unsafe-inline'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", '*.google.com', '*.gstatic.com'],
         styleSrc: ["'self'", 'https:', "'unsafe-inline'"],
         imgSrc: ["'self'", 'data:'],
         fontSrc: ["'self'", 'https:', 'data:']
