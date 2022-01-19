@@ -19,3 +19,4 @@ jobs:
           procfile: "web: lerna run start --scope=@switch-codes/api"
         env:
           NODE_ENV: prod
+          TEST_VAR: SOMETHING_COOL
