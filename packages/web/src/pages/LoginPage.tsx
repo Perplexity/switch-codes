@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import SwitchLogo from '../assets/switch-logo.png'
 import { Button, TextBox } from '../components/Form'
@@ -6,6 +6,7 @@ import { useCookies } from 'react-cookie'
 import { useIsAuthed } from '../hooks/isAuthed'
 import moment from 'moment'
 import { doLogin } from '../api'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 type InputChange = React.ChangeEvent<HTMLInputElement>
 
@@ -13,6 +14,7 @@ const LoginPage = () => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [remember, setRemember] = useState<boolean>(false)
+  const recaptchaRef = useRef<ReCAPTCHA>(null)
 
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | undefined>(undefined)
@@ -33,19 +35,28 @@ const LoginPage = () => {
     setRemember(e.currentTarget.checked)
   }
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!username || !password) {
       setError('Please fill in login details.')
       return
     }
-    submitLogin()
+    await submitLogin()
   }
 
-  const submitLogin = () => {
+  const submitLogin = async () => {
     setError(undefined)
     setLoading(true)
-    doLogin(username, password).then((response) => {
+    let recaptchaToken = null
+    if (recaptchaRef.current) {
+      recaptchaToken = await recaptchaRef.current.executeAsync()
+      if (!recaptchaToken) {
+        setError('There was an error with the CAPTCHA. Please try again.')
+      }
+    } else {
+      setError('There was an error with the CAPTCHA. Please try again.')
+    }
+    doLogin(username, password, recaptchaToken ?? '').then((response) => {
       const { token } = response.data
       if (token) {
         setCookie('auth_token', token, { path: '/', expires: remember ? undefined : moment().add(1, 'hour').toDate() })
@@ -54,7 +65,12 @@ const LoginPage = () => {
       }
     }).catch((err) => {
       setError(err.response.data.error)
-    }).finally(() => setLoading(false))
+    }).finally(() => {
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset()
+      }
+      setLoading(false)
+    })
   }
 
   return isAuthed
@@ -85,6 +101,7 @@ const LoginPage = () => {
               <Button colour='red' loading={loading} data-testid='submit'>{!loading && 'Sign in'}</Button>
               <Button colour='sky' type='button' outline><Link to='/register'>Register new account</Link></Button>
             </div>
+            <ReCAPTCHA ref={recaptchaRef} size='invisible' sitekey={process.env.REACT_APP_SITE_KEY ?? ''} />
             {error && (<div className="alert alert-error">
               <div className='mx-auto'>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-6 h-6 mx-2 stroke-current">

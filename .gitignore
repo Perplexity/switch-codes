@@ -5,3 +5,4 @@ development.env
 prod.env
 test.env
 packages/common/**/*.js
+.env

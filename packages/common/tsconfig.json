@@ -6,5 +6,5 @@
 		"experimentalDecorators": true,
 		"strictPropertyInitialization": false
 	},
-	"include": ["src", "index.ts", "entities"]
+	"include": ["src", "index.ts", "entities", "types"]
 }

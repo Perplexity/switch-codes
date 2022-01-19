@@ -71,6 +71,7 @@
     "paths": {
       "@switch-codes/common": ["../common"],
       "@switch-codes/common/entities": ["../common/entities"],
+      "@switch-codes/common/types": ["../common/types"],
     },
   },
   "include": [
