@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === 'prod') {
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", 'google.com'],
+        scriptSrc: ["'self'", "'unsafe-inline'", 'https://www.google.com/recaptcha/api.js'],
         styleSrc: ["'self'", 'https:', "'unsafe-inline'"],
         imgSrc: ["'self'", 'data:'],
         fontSrc: ["'self'", 'https:', 'data:']
